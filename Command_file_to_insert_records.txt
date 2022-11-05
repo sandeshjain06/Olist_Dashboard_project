@@ -1,0 +1,200 @@
+First Create table  in mysql workbench 
+
+Steps to insert records 
+
+Open CMD 
+
+1) mysql –u root  –p  - click enter
+
+Afterwards it will ask for password enter the mysql workbench password
+
+2) Use the database name which is created in mysql workbench and check the tables .
+
+use olist_store   - Database name 
+
+show tables;
+
+
+3)  To Insert Record - Mention the file path name and table name  in the below command.
+
+LOAD DATA INFILE 'D:/Sandesh/Data Analyst/Project/Project 6 - E-Commerce (6 PM - 7 PM)/Dataset/olist_orders_dataset.csv'
+INTO TABLE olist_orders
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+
+SET SQL_SAFE_UPDATES = 0;
+update olist_order_items 
+set shipping_limit_date = date_format(shipping_limit_date,'%y/%d/%m %h:%m');
+
+
+alter table olist_orders 
+modify order_delivered_carrier_date varchar(300);
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+secure-file-priv="C:/ProgramData/MySQL/MySQL Server 8.0/Uploads"
+
+SHOW VARIABLES LIKE "secure_file_priv";
+
+create table olist_orders_dataset(
+order_id	,
+customer_id	,
+order_status	,
+order_purchase_timestamp	,
+order_approved_at	,
+order_delivered_carrier_date	,
+order_delivered_customer_date	,
+order_estimated_delivery_date  )
+ 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+1) Weekday Vs Weekend (order_purchase_timestamp) Payment Statistics 
+
+SELECT round(SUM(CASE WHEN WEEKDAY(a.order_purchase_timestamp) < 5 THEN b.payment_value END),2) AS WeekDay_Payment,
+round(SUM(CASE WHEN WEEKDAY(a.order_purchase_timestamp) >= 5 THEN b.payment_value END),2) AS WeekEnd_Payment
+from olist_orders as A 
+INNER JOIN olist_payment as b 
+using (order_id) 
+where a.order_status = 'delivered';
+
+
+2) Number of Orders with review score 5 and payment type as credit card.
+
+select review_score,payment_type,count(distinct(a.order_id)) as total_no_of_orders 
+from olist_order_review as a 
+INNER JOIN olist_payment as b
+using (order_id) 
+where a.review_score = 5 and b.payment_type='credit_card';
+
+
+3) Average number of days taken for order_delivered_customer_date for pet_shop 
+
+Select c.product_category_name,round(avg(datediff(order_delivered_customer_date,order_purchase_timestamp))) as avg_delivery_days 
+from olist_orders as a INNER JOIN olist_order_items as b 
+INNER JOIN olist_product as c  
+where a.order_id=b.order_id and  b.product_id=c.product_id 
+and c.product_category_name='pet_shop';
+
+Select c.product_category_name,round(avg(datediff(order_delivered_customer_date,order_purchase_timestamp))) as Avg_days_taken_to_deliver_Product 
+from olist_orders as a INNER JOIN olist_order_items as b  
+using (order_id)
+INNER JOIN olist_product as c 
+using (product_id)
+where c.product_category_name='pet_shop';
+
+
+4) Average price and payment values from customers of sao paulo city
+
+select count(distinct(a.customer_id)) as total_customers ,round(avg(price),2) as avg_price ,round(avg(payment_value),2) as avg_payment_value,a.customer_city
+from olist_cust as a INNER JOIN olist_orders as b INNER JOIN olist_order_items as c INNER JOIN olist_payment as d 
+where a.customer_id=b.customer_id and  b.order_id=c.order_id and c.order_id=d.order_id
+and a.customer_city='sao paulo' and b.order_status='delivered';
+
+
+Select count(distinct(a.customer_id)) as total_customers ,round(avg(price),2) as avg_price ,round(avg(payment_value),2) as avg_payment_value,a.customer_city
+from olist_cust as a 
+INNER JOIN olist_orders as b using (customer_id) 
+INNER JOIN olist_order_items as c  using (order_id) 
+INNER JOIN olist_payment as d  using (order_id)
+where a.customer_city='sao paulo' and b.order_status='delivered';
+
+
+
+5) Relationship between shipping days (order_delivered_customer_date - order_purchase_timestamp) Vs review scores.
+
+select b.review_score as review_score ,round(avg(datediff(order_delivered_customer_date,order_purchase_timestamp)),0) as Avg_days_taken_to_deliver_Product 
+from olist_orders as a INNER JOIN olist_order_review as b
+using (order_id)
+group by review_score order by review_score 
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+customer table	-     99,441  - cust_id
+order  table     	-     99,441  - cust_id , order_id 
+order items    	-     1,12,650 / 98,666  - order_id
+order payment	-     1,03,886 / 99,440  - order_id
+order review   	-     99,209 /  98,658    - order_id
+
+
+product 	-     32,340 -   product_id 
+order_items   -     32,951 -  product_id
+
+
+Pivot table  - 
+Power query  -  Solved Question : 3 - mayank 
+Data Modelling  -  DAX 
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Tableau KPI Steps : 
+
+1) Weekday Vs Weekend (order_purchase_timestamp) Payment Statistics 
+
+IF DATEPART('weekday',[Order Purchase Timestamp]) = 1 OR  DATEPART('weekday',[Order Purchase Timestamp]) = 7
+THEN "WeekEnd"
+ELSE "WeekDay"
+END
+
+
+2) Number of Orders with review score 5 and payment type as credit card.
+
+1.Drag and Drop the review score and then go to Analysis - unselect aggregrate measures , it will convert the sum(review_score) to review_score.
+2.Drag and drop it to filters 
+3.Make barchart by using payment type and count of orders , and now to show the diff review_score and for coloring purposes use the review_score from the filter in place of sum(review_score) 
+
+
+3) Average number of days taken for order_delivered_customer_date for pet_shop 
+
+4) Average price and payment values from customers of sao paulo city
+
+5) Relationship between shipping days (order_delivered_customer_date - order_purchase_timestamp) Vs review scores.
+
+
+How to Create Parameters
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Things to Add in DashBoard - Total Customers , Total Orders , avg_price , no_of_products,avg_delivery_time , avg_review_score , Total_quantity_sold , Avg_Payment_Price , Mostly Used Payment_type
+
+1. Filter , Actions , Parameters
+2. Global and Local Filters
+3. Dashboard , Sub-DashBoard , Back Button , 
+4. Reset Button to clear the dashboards.
+
+
+[Year_param] =  str([Order Delivered Customer Date]) OR
+[Year_param] = 'All'
+
+
+top 5 and bottom 5 customers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
