@@ -3,7 +3,9 @@
 - Tableau File Name - olist_project_3
 
 
-- Dataset - olist_customer , olist_orders , olist_order_review , olist_order_items , olist_payment , olist_product (Total - 6)
+- Dataset - 
+
+-  OLIST_CUSTOMER  , olist_orders , olist_order_review , olist_order_items , olist_payment , olist_product (Total - 6)
 
 
 
