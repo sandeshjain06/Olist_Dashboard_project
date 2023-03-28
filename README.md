@@ -70,7 +70,7 @@ Conclusion
 5) Most no of review are Score = 5 .
 6) Month Wise Review Score - In the 3rd and 4th quarter there is dip in the review score = 5
 7) In every month 96-98% of the orders are getting delivered.
-8) Top Selling Product , Year Wise Profit , Year Wise Customer Gain .
+8) Top Selling Product , Year Wise Profit , Year Wise Customer Gain , Top 5 cities giving profit -(sao paulo , riode janerio , belo horizonto , porto , brasilia)
 
 
 
