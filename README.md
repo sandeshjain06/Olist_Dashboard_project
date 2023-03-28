@@ -53,7 +53,7 @@
 
 - Third DashBoard (Average days taken to deliver products)
 
-![Dash_3](https://user-images.githubusercontent.com/91243691/224987723-92e94d01-63b8-4f2a-b90a-792c2635e616.png)
+![Dash_3](https://user-images.githubusercontent.com/91243691/228154514-9cd0a8f0-e536-44b0-9301-06cd7112564f.png)
 
 
 - Fourth DashBoard (Avg price and payment values of customer from particular city)
@@ -67,13 +67,14 @@
 
 
 Conclusion
-
 1) WeekDay Payment collection is more compare to Weekend payment.
 2) Top 5 Products and City which gives profit on weekday and weekend.
 3) May Month is the Highest profit month compared to other months.
 4) Credit card is the most used payment type
 5) Most no of review are Score = 5 .
 6) Month Wise Review Score - In the 3rd and 4th quarter there is dip in the review score = 5
+7) In every month 96-98% of the orders are getting delivered.
+8) Top Selling Product , Year Wise Profit , Year Wise Customer Gain .
 
 
 
