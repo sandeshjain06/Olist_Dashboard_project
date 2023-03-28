@@ -2,6 +2,14 @@
 
 - Tableau File Name - olist_project_3
 
+
+- Dataset - olist_customer , olist_orders , olist_order_review , olist_order_items , olist_payment , olist_product (Total - 6)
+
+
+
+
+
+
 ![DashBoard](https://user-images.githubusercontent.com/91243691/200104488-c4f563bf-e03d-4f98-8b76-01057ed4782c.png)
 
 ![Dash_1](https://user-images.githubusercontent.com/91243691/224987601-671b319b-99df-4e0d-bdbe-bdff6d11cd9a.png)
