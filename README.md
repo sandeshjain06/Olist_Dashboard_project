@@ -61,10 +61,6 @@
 ![Dash_4](https://user-images.githubusercontent.com/91243691/224988251-1883682d-3c6f-4346-8d91-8ea37625ea29.png)
 
 
-- Fifth DashBoard (Relationship between review score and shipping days)
-
-![Dash_4](https://user-images.githubusercontent.com/91243691/224988251-1883682d-3c6f-4346-8d91-8ea37625ea29.png)
-
 
 Conclusion
 1) WeekDay Payment collection is more compare to Weekend payment.
